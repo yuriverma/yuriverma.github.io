@@ -19,7 +19,10 @@ This site serves as a living representation of my journey as a developer — fro
 
 
 
- [**View Portfolio**](https://yourusername.github.io/portfolio/) ← _(replace with deployed link)_
+## 🚀 Live Portfolio
+
+ Check it out here 👉 [yuriverma.github.io](https://yuriverma.github.io)
+
 
 ---
 
