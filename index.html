@@ -191,6 +191,9 @@
             opacity: 0;
             transform: translateY(50px);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            text-decoration: none;
+            color: inherit;
+            display: block;
         }
 
         .project-card::before {
@@ -228,6 +231,24 @@
             color: #c0c0c0;
             line-height: 1.7;
             font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        .tech-tag {
+            background: rgba(184, 134, 11, 0.1);
+            color: #b8860b;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1px solid rgba(184, 134, 11, 0.3);
         }
 
         /* About Section */
@@ -260,28 +281,97 @@
         }
 
         /* Contact Section */
+        .contact-info {
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(50px);
+        }
 
-        <section id="contact" class="section">
-            <h2 class="section-title animate-on-scroll slide-left">Contact</h2>
-            <div class="about animate-on-scroll slide-right">
-                <div class="about-content">
-                    <p class="about-text">
-                    Let’s connect! Reach out to me directly:
-                    </p>
-                    <p class="about-text"><span class="about-highlight">Email:</span> yuriverma2006@gmail.com</p>
-                    <p class="about-text"><span class="about-highlight">LinkedIn:</span>
-                        <a href="https://www.linkedin.com/in/yuriverma/" target="_blank" class="link-text">linkedin.com/in/yuriverma</a>
-                    </p>
-                    <p class="about-text"><span class="about-highlight">GitHub:</span>
-                        <a href="https://github.com/yuriverma" target="_blank" class="link-text">github.com/yuriverma</a>
-                    </p>
-                </div>
-            </div>
-        </section>
+        .contact-content {
+            text-align: center;
+        }
 
+        .contact-intro {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3rem;
+            color: #d0d0d0;
+            margin-bottom: 50px;
+            font-style: italic;
+        }
 
+        .contact-links {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
 
-       
+        .contact-link {
+            display: flex;
+            align-items: center;
+            padding: 25px 30px;
+            background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
+            border: 1px solid #333;
+            border-radius: 10px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(184, 134, 11, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .contact-link:hover::before {
+            left: 100%;
+        }
+
+        .contact-link:hover {
+            border-color: #b8860b;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(184, 134, 11, 0.2);
+        }
+
+        .contact-icon {
+            font-size: 1.8rem;
+            margin-right: 20px;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(184, 134, 11, 0.1);
+            border-radius: 50%;
+            color: #b8860b;
+        }
+
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .contact-label {
+            font-family: 'Cinzel', serif;
+            color: #b8860b;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .contact-value {
+            color: #d0d0d0;
+            font-size: 1rem;
+        }
 
         /* Navigation */
         .nav {
@@ -337,6 +427,21 @@
                 top: 20px;
                 right: 20px;
             }
+
+            .contact-links {
+                gap: 20px;
+            }
+
+            .contact-link {
+                padding: 20px;
+            }
+
+            .contact-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.5rem;
+                margin-right: 15px;
+            }
         }
 
         /* Scroll animations class */
@@ -387,24 +492,42 @@
     <section id="projects" class="section">
         <h2 class="section-title animate-on-scroll slide-left">Projects</h2>
         <div class="projects-grid">
-            <div class="project-card animate-on-scroll fade-up stagger-1">
-                <h3 class="project-title">ISRO Drone Navigation System</h3>
+            <a href="isro-drone.html" class="project-card animate-on-scroll fade-up stagger-1">
+                <h3 class="project-title">🛰️ ISRO Drone Navigation System</h3>
                 <p class="project-description">
-                    Advanced autonomous navigation system for ISRO drones, utilizing cutting-edge computer vision and machine learning algorithms to enable precise flight control and obstacle avoidance in complex environments.
+                    Autonomous aerial vehicle with advanced 3D navigation for GPS-denied environments. Features real-time obstacle avoidance, depth mapping, and autonomous landing capabilities for ISRO's research and rescue operations.
                 </p>
-            </div>
-            <div class="project-card animate-on-scroll fade-up stagger-2">
-                <h3 class="project-title">AI Credit Card Bot</h3>
+                <div class="project-tech">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">ROS2</span>
+                    <span class="tech-tag">OpenCV</span>
+                    <span class="tech-tag">Gazebo</span>
+                </div>
+            </a>
+            <a href="ai-credit-bot.html" class="project-card animate-on-scroll fade-up stagger-2">
+                <h3 class="project-title">💳 AI Credit Card Bot</h3>
                 <p class="project-description">
-                    Intelligent chatbot leveraging natural language processing to provide personalized credit card recommendations, fraud detection capabilities, and automated customer support for financial institutions.
+                    Conversational AI assistant for Bank of Baroda, featuring contextual dialogue flow, personalized recommendations, and CRM integration. Achieved 80% accuracy in relevant pitch suggestions.
                 </p>
-            </div>
-            <div class="project-card animate-on-scroll fade-up stagger-3">
-                <h3 class="project-title">Shopping Recommender System</h3>
+                <div class="project-tech">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">LangChain</span>
+                    <span class="tech-tag">OpenAI</span>
+                    <span class="tech-tag">Streamlit</span>
+                </div>
+            </a>
+            <a href="shopping-recommender.html" class="project-card animate-on-scroll fade-up stagger-3">
+                <h3 class="project-title">🛍️ Shopping Recommender System</h3>
                 <p class="project-description">
-                    Machine learning-powered recommendation engine that analyzes user behavior patterns and preferences to deliver highly personalized product suggestions, increasing conversion rates by 40%.
+                    Personalized e-commerce recommendation engine using collaborative and content-based filtering. Achieved 40% boost in recommendation relevance, designed as a potential startup MVP.
                 </p>
-            </div>
+                <div class="project-tech">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">scikit-learn</span>
+                    <span class="tech-tag">Pandas</span>
+                    <span class="tech-tag">Machine Learning</span>
+                </div>
+            </a>
         </div>
     </section>
 
@@ -429,21 +552,34 @@
     <!-- Contact Section -->
     <section id="contact" class="section">
         <h2 class="section-title animate-on-scroll slide-left">Contact</h2>
-        <form class="contact-form animate-on-scroll fade-up">
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" id="name" name="name" required>
+        <div class="contact-info animate-on-scroll fade-up">
+            <div class="contact-content">
+                <p class="contact-intro">Ready to build something extraordinary? Let's connect.</p>
+                <div class="contact-links">
+                    <a href="mailto:yuriverma2006@gmail.com" class="contact-link">
+                        <div class="contact-icon">✉</div>
+                        <div class="contact-details">
+                            <span class="contact-label">Email</span>
+                            <span class="contact-value">yuriverma2006@gmail.com</span>
+                        </div>
+                    </a>
+                    <a href="https://www.linkedin.com/in/yuri-verma/" target="_blank" class="contact-link">
+                        <div class="contact-icon">💼</div>
+                        <div class="contact-details">
+                            <span class="contact-label">LinkedIn</span>
+                            <span class="contact-value">linkedin.com/in/yuri-verma</span>
+                        </div>
+                    </a>
+                    <a href="https://github.com/yuriverma" target="_blank" class="contact-link">
+                        <div class="contact-icon">⚡</div>
+                        <div class="contact-details">
+                            <span class="contact-label">GitHub</span>
+                            <span class="contact-value">github.com/yuriverma</span>
+                        </div>
+                    </a>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="message">Message</label>
-                <textarea id="message" name="message" required placeholder="Let's build something extraordinary together..."></textarea>
-            </div>
-            <button type="submit" class="submit-btn">Send Message</button>
-        </form>
+        </div>
     </section>
 
     <script>
@@ -497,30 +633,6 @@
                     behavior: 'smooth'
                 });
             });
-        });
-
-        // Form submission
-        document.querySelector('.contact-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            // Get form data
-            const formData = new FormData(e.target);
-            const name = formData.get('name');
-            const email = formData.get('email');
-            const message = formData.get('message');
-            
-            // Simple success feedback
-            const submitBtn = e.target.querySelector('.submit-btn');
-            const originalText = submitBtn.textContent;
-            
-            submitBtn.textContent = 'Message Sent!';
-            submitBtn.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
-            
-            setTimeout(() => {
-                submitBtn.textContent = originalText;
-                submitBtn.style.background = 'linear-gradient(135deg, #b8860b, #d4af37)';
-                e.target.reset();
-            }, 2000);
         });
 
         // Smooth scroll polyfill for older browsers

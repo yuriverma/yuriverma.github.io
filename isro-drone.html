@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISRO Drone Navigation System - Yuri Verma</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            color: #e8e8e8;
+            line-height: 1.6;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 20px 0;
+            border-bottom: 1px solid #333;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: #b8860b;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-btn {
+            background: linear-gradient(135deg, #b8860b, #d4af37);
+            color: #0a0a0a;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(184, 134, 11, 0.3);
+        }
+
+        /* Hero Section */
+        .project-hero {
+            height: 60vh;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            margin-top: 80px;
+        }
+
+        .project-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 30%, rgba(184, 134, 11, 0.1) 0%, transparent 70%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .project-emoji {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .project-title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            color: #b8860b;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .project-subtitle {
+            font-size: 1.3rem;
+            color: #d0d0d0;
+            font-style: italic;
+        }
+
+        /* Content Sections */
+        .content-section {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            color: #b8860b;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: #b8860b;
+        }
+
+        .content-text {
+            font-size: 1.1rem;
+            color: #d0d0d0;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .highlight {
+            color: #b8860b;
+            font-weight: 600;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .feature-card {
+            background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: #b8860b;
+            transform: translateY(-5px);
+        }
+
+        .feature-title {
+            font-family: 'Cinzel', serif;
+            color: #b8860b;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .feature-desc {
+            color: #c0c0c0;
+            line-height: 1.6;
+        }
+
+        /* Tech Stack */
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 40px 0;
+        }
+
+        .tech-item {
+            background: rgba(184, 134, 11, 0.1);
+            color: #b8860b;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 500;
+            border: 1px solid rgba(184, 134, 11, 0.3);
+        }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
+            border-radius: 10px;
+            border: 1px solid #333;
+        }
+
+        .stat-number {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            color: #b8860b;
+            font-weight: 700;
+            display: block;
+        }
+
+        .stat-label {
+            color: #d0d0d0;
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+
+        /* Challenge Section */
+        .challenge-section {
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+            margin: 80px 0;
+            border-radius: 20px;
+            padding: 60px;
+            border: 1px solid #333;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .header-content {
+                padding: 0 15px;
+            }
+
+            .content-section {
+                padding: 60px 15px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .challenge-section {
+                padding: 40px 20px;
+                margin: 60px 0;
+            }
+
+            .tech-stack {
+                gap: 10px;
+            }
+
+            .tech-item {
+                padding: 6px 12px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="index.html" class="logo">Yuri Verma</a>
+            <a href="index.html#projects" class="back-btn">← Back to Portfolio</a>
+        </div>
+    </header>
+
+    <!-- Project Hero -->
+    <section class="project-hero">
+        <div class="hero-content">
+            <span class="project-emoji">🛰️</span>
+            <h1 class="project-title">ISRO Drone Navigation System</h1>
+            <p class="project-subtitle">Autonomous Aerial Vehicle for GPS-Denied Environments</p>
+        </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section class="content-section">
+        <h2 class="section-title">Project Overview</h2>
+        <p class="content-text">
+            As part of a <span class="highlight">practicum project under ISRO IROC-25</span>, I led the development of an Autonomous Aerial Vehicle equipped for advanced 3D navigation and mapping. The drone was designed to operate in GPS-denied environments, with a focus on obstacle avoidance, autonomous landing, and safe return protocols.
+        </p>
+        <p class="content-text">
+            This project represents a significant contribution to <span class="highlight">ISRO's initiative on indoor autonomous vehicles</span> for research and rescue operations, showcasing cutting-edge computer vision and robotics integration.
+        </p>
+
+        <div class="stats-grid">
+            <div class="stat-item">
+                <span class="stat-number">100%</span>
+                <div class="stat-label">Indoor Coverage Accuracy</div>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">30fps</span>
+                <div class="stat-label">Real-time Processing</div>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">95%</span>
+                <div class="stat-label">Obstacle Detection Rate</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Features Section -->
+    <section class="content-section">
+        <h2 class="section-title">Key Features & Capabilities</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <h3 class="feature-title">🎯 Depth Perception & 3D Mapping</h3>
+                <p class="feature-desc">
+                    Utilized the OAK-D Lite 3D stereo depth camera to generate real-time depth maps of the environment, enabling precise spatial awareness and navigation in complex indoor spaces.
+                </p>
+            </div>
+            <div class="feature-card">
+                <h3 class="feature-title">👁️ Computer Vision with OpenCV</h3>
+                <p class="feature-desc">
+                    Implemented advanced obstacle detection using depth frames and image segmentation to identify both dynamic and static obstacles, ensuring safe autonomous flight.
+                </p>
+            </div>
+            <div class="feature-card">
+                <h3 class="feature-title">🤖 Autonomous Navigation</h3>
+                <p class="feature-desc">
+                    Built comprehensive navigation logic in ROS2 Foxy, integrating path planning, object avoidance, and real-time feedback loops for seamless autonomous operation.
+                </p>
+            </div>
+            <div class="feature-card">
+                <h3 class="feature-title">🏠 Return-to-Home Logic</h3>
+                <p class="feature-desc">
+                    Designed a state-based fallback system to autonomously return the drone to its starting location in case of signal loss or low battery conditions.
+                </p>
+            </div>
+            <div class="feature-card">
+                <h3 class="feature-title">🛬 Safe Landing Zone Detection</h3>
+                <p class="feature-desc">
+                    Applied contour analysis and variance checks on elevation maps to identify flat, obstacle-free zones for safe autonomous landing operations.
+                </p>
+            </div>
+            <div class="feature-card">
+                <h3 class="feature-title">🎮 Simulation Environment</h3>
+                <p class="feature-desc">
+                    Developed a fully functional testbed using Gazebo simulator for aerial dynamics testing before hardware deployment, ensuring system reliability.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Implementation -->
+    <section class="content-section">
+        <h2 class="section-title">Technical Implementation</h2>
+        <div class="challenge-section">
+            <h3 class="feature-title">🔧 Architecture & Design</h3>
+            <p class="content-text">
+                The system architecture was built around <span class="highlight">ROS2 Foxy</span> as the core middleware, providing robust inter-process communication and modular design. The navigation stack integrated multiple subsystems including sensor fusion, path planning, and control algorithms.
+            </p>
+            <p class="content-text">
+                Key technical challenges included handling <span class="highlight">real-time depth processing</span> at 30fps while maintaining computational efficiency on embedded hardware, and developing robust state machines for autonomous decision-making in unpredictable environments.
+            </p>
+        </div>
+
+        <h3 class="section-title">Technologies Used</h3>
+        <div class="tech-stack">
+            <span class="tech-item">Python</span>
+            <span class="tech-item">ROS2 Foxy</span>
+            <span class="tech-item">Gazebo Simulator</span>
+            <span class="tech-item">OpenCV</span>
+            <span class="tech-item">OAK-D Lite Camera</span>
+            <span class="tech-item">RViz</span>
+            <span class="tech-item">Real-Time Messaging (RTM)</span>
+            <span class="tech-item">macOS Development</span>
+            <span class="tech-item">Computer Vision</span>
+            <span class="tech-item">Autonomous Systems</span>
+        </div>
+    </section>
+
+    <!-- Impact & Results -->
+    <section class="content-section">
+        <h2 class="section-title">Impact & Results</h2>
+        <p class="content-text">
+            The project successfully demonstrated <span class="highlight">full aerial coverage of an indoor arena</span> with high spatial accuracy, proving the viability of GPS-denied navigation systems for real-world applications.
+        </p>
+        <p class="content-text">
+            This work directly contributed to <span class="highlight">ISRO's research initiatives</span> on autonomous vehicles for search and rescue operations, providing a robust foundation for future development of indoor navigation systems.
+        </p>
+        <p class="content-text">
+            The simulation-first approach enabled rapid prototyping and testing, reducing development time by approximately <span class="highlight">40%</span> compared to traditional hardware-first methodologies.
+        </p>
+    </section>
+</body>
+</html>
