@@ -1,833 +1,211 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Credit Card Bot - Yuri Verma</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #0a0a0a;
-            color: #e8e8e8;
-            line-height: 1.6;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        /* Header */
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            padding: 20px 0;
-            border-bottom: 1px solid #333;
-        }
-
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-        }
-
-        .logo {
-            font-family: 'Cinzel', serif;
-            font-size: 1.5rem;
-            color: #b8860b;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .back-btn {
-            background: linear-gradient(135deg, #b8860b, #d4af37);
-            color: #0a0a0a;
-            padding: 10px 20px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .back-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(184, 134, 11, 0.3);
-        }
-
-        /* Hero Section */
-        .project-hero {
-            height: 60vh;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative;
-            margin-top: 80px;
-        }
-
-        .project-hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 50% 30%, rgba(184, 134, 11, 0.1) 0%, transparent 70%);
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: 800px;
-            padding: 0 20px;
-        }
-
-        .project-emoji {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            display: block;
-        }
-
-        .project-title {
-            font-family: 'Cinzel', serif;
-            font-size: clamp(2.5rem, 6vw, 4rem);
-            color: #b8860b;
-            margin-bottom: 20px;
-            font-weight: 700;
-        }
-
-        .project-subtitle {
-            font-size: 1.3rem;
-            color: #d0d0d0;
-            font-style: italic;
-        }
-
-        /* Content Sections */
-        .content-section {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 80px 20px;
-        }
-
-        .section-title {
-            font-family: 'Cinzel', serif;
-            font-size: 2.5rem;
-            color: #b8860b;
-            margin-bottom: 40px;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 60px;
-            height: 3px;
-            background: #b8860b;
-        }
-
-        .content-text {
-            font-size: 1.1rem;
-            color: #d0d0d0;
-            line-height: 1.8;
-            margin-bottom: 30px;
-        }
-
-        .highlight {
-            color: #b8860b;
-            font-weight: 600;
-        }
-
-        /* Features Grid */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin: 60px 0;
-        }
-
-        .feature-card {
-            background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
-            border: 1px solid #333;
-            border-radius: 10px;
-            padding: 30px;
-            transition: all 0.3s ease;
-        }
-
-        .feature-card:hover {
-            border-color: #b8860b;
-            transform: translateY(-5px);
-        }
-
-        .feature-title {
-            font-family: 'Cinzel', serif;
-            color: #b8860b;
-            font-size: 1.3rem;
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-
-        .feature-desc {
-            color: #c0c0c0;
-            line-height: 1.6;
-        }
-
-        /* Tech Stack */
-        .tech-stack {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin: 40px 0;
-        }
-
-        .tech-item {
-            background: rgba(184, 134, 11, 0.1);
-            color: #b8860b;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: 500;
-            border: 1px solid rgba(184, 134, 11, 0.3);
-        }
-
-        /* Stats */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            margin: 60px 0;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 30px;
-            background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
-            border-radius: 10px;
-            border: 1px solid #333;
-        }
-
-        .stat-number {
-            font-family: 'Cinzel', serif;
-            font-size: 2.5rem;
-            color: #b8860b;
-            font-weight: 700;
-            display: block;
-        }
-
-        .stat-label {
-            color: #d0d0d0;
-            font-size: 1rem;
-            margin-top: 10px;
-        }
-
-        /* Challenge Section */
-        .challenge-section {
-            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
-            margin: 80px 0;
-            border-radius: 20px;
-            padding: 60px;
-            border: 1px solid #333;
-        }
-
-        /* Architecture Diagram */
-        .architecture-flow {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            margin: 40px 0;
-            padding: 30px;
-            background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
-            border-radius: 10px;
-            border: 1px solid #333;
-        }
-
-        .flow-step {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            padding: 20px;
-            background: rgba(184, 134, 11, 0.05);
-            border-radius: 8px;
-            border-left: 3px solid #b8860b;
-        }
-
-        .flow-number {
-            width: 40px;
-            height: 40px;
-            background: #b8860b;
-            color: #0a0a0a;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            flex-shrink: 0;
-        }
-
-        .flow-content {
-            flex: 1;
-        }
-
-        .flow-title {
-            color: #b8860b;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        .flow-desc {
-            color: #c0c0c0;
-            font-size: 0.95rem;
-        }
-
-        /* Demo Section */
-        .demo-section {
-            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
-            border-radius: 20px;
-            padding: 60px;
-            border: 1px solid #333;
-            margin: 80px 0;
-        }
-
-        .demo-mockup {
-            background: #000;
-            border-radius: 15px;
-            padding: 30px;
-            border: 2px solid #333;
-            margin: 40px 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .demo-mockup::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 40px;
-            background: linear-gradient(90deg, #b8860b, #d4af37);
-            border-radius: 15px 15px 0 0;
-        }
-
-        .chat-interface {
-            margin-top: 50px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .chat-message {
-            padding: 15px 20px;
-            border-radius: 15px;
-            max-width: 70%;
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-
-        .user-message {
-            background: rgba(184, 134, 11, 0.2);
-            color: #fff;
-            align-self: flex-end;
-            border: 1px solid rgba(184, 134, 11, 0.3);
-        }
-
-        .bot-message {
-            background: rgba(255, 255, 255, 0.05);
-            color: #e8e8e8;
-            align-self: flex-start;
-            border: 1px solid #333;
-        }
-
-        .typing-indicator {
-            display: none;
-            align-items: center;
-            gap: 5px;
-            padding: 15px 20px;
-            color: #888;
-            font-style: italic;
-            max-width: 70%;
-            align-self: flex-start;
-        }
-
-        .typing-dots {
-            display: flex;
-            gap: 3px;
-        }
-
-        .typing-dot {
-            width: 6px;
-            height: 6px;
-            background: #b8860b;
-            border-radius: 50%;
-            animation: typing 1.4s infinite;
-        }
-
-        .typing-dot:nth-child(1) { animation-delay: 0s; }
-        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
-        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
-
-        @keyframes typing {
-            0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
-            30% { transform: translateY(-10px); opacity: 1; }
-        }
-
-        /* Achievements */
-        .achievements-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin: 60px 0;
-        }
-
-        .achievement-card {
-            background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
-            border: 1px solid #333;
-            border-radius: 10px;
-            padding: 30px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .achievement-card:hover {
-            border-color: #b8860b;
-            transform: translateY(-5px);
-        }
-
-        .achievement-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            display: block;
-        }
-
-        .achievement-title {
-            font-family: 'Cinzel', serif;
-            color: #b8860b;
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-
-        .achievement-desc {
-            color: #c0c0c0;
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-
-        /* Mobile Responsiveness */
-        @media (max-width: 768px) {
-            .header-content {
-                padding: 0 15px;
-            }
-
-            .content-section {
-                padding: 60px 15px;
-            }
-
-            .features-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            .challenge-section, .demo-section {
-                padding: 40px 20px;
-                margin: 60px 0;
-            }
-
-            .tech-stack {
-                gap: 10px;
-            }
-
-            .tech-item {
-                padding: 6px 12px;
-                font-size: 0.9rem;
-            }
-
-            .flow-step {
-                flex-direction: column;
-                text-align: center;
-                gap: 15px;
-            }
-
-            .chat-message {
-                max-width: 85%;
-            }
-
-            .demo-mockup {
-                padding: 20px;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 20px;
-            }
-
-            .achievements-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Credit Card Bot - Yuri Verma</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {margin:0; padding:0; box-sizing:border-box;}
+    body {
+      font-family:'Inter',sans-serif;
+      background:#0a0a0a; color:#e8e8e8;
+      line-height:1.6; overflow-x:hidden;
+    }
+    html {scroll-behavior:smooth;}
+
+    /* Header */
+    .header {
+      position:fixed; top:0; left:0; right:0;
+      background:rgba(10,10,10,0.95);
+      backdrop-filter:blur(10px);
+      z-index:1000; padding:20px 0;
+      border-bottom:1px solid #333;
+    }
+    .header-content {
+      max-width:1200px; margin:0 auto;
+      display:flex; justify-content:space-between; align-items:center;
+      padding:0 20px;
+    }
+    .logo {
+      font-family:'Cinzel',serif;
+      font-size:1.5rem; color:#b8860b;
+      text-decoration:none; font-weight:600;
+    }
+    .back-btn {
+      background:linear-gradient(135deg,#b8860b,#d4af37);
+      color:#0a0a0a; padding:10px 20px;
+      border-radius:5px; text-decoration:none;
+      font-weight:600; transition:all 0.3s;
+    }
+    .back-btn:hover {transform:translateY(-2px); box-shadow:0 5px 15px rgba(184,134,11,0.3);}
+
+    /* Hero */
+    .project-hero {
+      height:100vh;
+      background:linear-gradient(135deg,#0a0a0a 0%,#1a1a1a 50%,#0f0f0f 100%);
+      display:flex; align-items:center; justify-content:flex-start;
+      text-align:left; position:relative;
+      margin-top:80px; overflow:hidden;
+      padding-left:10%;
+    }
+    .project-hero::after {
+      content:"";
+      position:absolute; top:0; right:0; bottom:0;
+      width:40%;
+      background:url('images/peaky-potrait.jpg') no-repeat center right/cover;
+      opacity:0.07; pointer-events:none;
+    }
+    .hero-content {
+      position:relative; z-index:2;
+      max-width:700px; padding:0 20px;
+    }
+    .project-emoji {
+      font-size:4rem; margin-bottom:20px; display:block;
+      animation:float 4s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%,100%{transform:translateY(0) rotate(-3deg);}
+      50%{transform:translateY(-15px) rotate(3deg);}
+    }
+    .project-title {
+      font-family:'Cinzel',serif;
+      font-size:clamp(3rem,7vw,4.5rem);
+      color:#b8860b; margin-bottom:20px;
+      font-weight:700; text-shadow:0 15px 40px rgba(184,134,11,0.4);
+    }
+    .project-subtitle {
+      font-size:1.4rem; color:#d0d0d0; font-style:italic;
+    }
+
+    /* Sections */
+    .content-section {
+      max-width:1000px; margin:0 auto;
+      padding:100px 20px;
+    }
+    .section-title {
+      font-family:'Cinzel',serif;
+      font-size:2.5rem; color:#b8860b;
+      margin-bottom:40px; position:relative;
+    }
+    .section-title::after {
+      content:''; position:absolute;
+      bottom:-10px; left:0; width:60px; height:3px;
+      background:linear-gradient(90deg,#b8860b,transparent);
+    }
+    .content-text {
+      font-size:1.1rem; color:#d0d0d0;
+      line-height:1.8; margin-bottom:30px;
+    }
+    .highlight {color:#b8860b; font-weight:600;}
+
+    /* Grid */
+    .features-grid {
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+      gap:30px; margin:60px 0;
+    }
+    .feature-card {
+      background:linear-gradient(145deg,#1a1a1a,#0f0f0f);
+      border:1px solid #333; border-radius:15px;
+      padding:30px; transition:all 0.3s;
+    }
+    .feature-card:hover {
+      border-color:#b8860b; transform:translateY(-6px);
+      box-shadow:0 12px 25px rgba(184,134,11,0.15);
+    }
+    .feature-title {
+      font-family:'Cinzel',serif; color:#b8860b;
+      font-size:1.3rem; margin-bottom:10px; font-weight:600;
+    }
+    .feature-desc {color:#c0c0c0;}
+
+    /* Tech Stack */
+    .tech-stack {
+      display:flex; flex-wrap:wrap; gap:15px; margin:40px 0;
+    }
+    .tech-item {
+      background:rgba(184,134,11,0.1);
+      color:#b8860b; padding:10px 18px;
+      border-radius:25px; font-weight:500;
+      border:1px solid rgba(184,134,11,0.3);
+    }
+  </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="header-content">
-            <a href="index.html" class="logo">Yuri Verma</a>
-            <a href="index.html#projects" class="back-btn">← Back to Portfolio</a>
-        </div>
-    </header>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <a href="index.html" class="logo">Yuri Verma</a>
+      <a href="index.html#projects" class="back-btn">← Back to Portfolio</a>
+    </div>
+  </header>
 
-    <!-- Project Hero -->
-    <section class="project-hero">
-        <div class="hero-content">
-            <span class="project-emoji">💳</span>
-            <h1 class="project-title">AI Credit Card Bot</h1>
-            <p class="project-subtitle">Conversational AI for Intelligent Financial Services</p>
-        </div>
-    </section>
+  <!-- Hero -->
+  <section class="project-hero">
+    <div class="hero-content">
+      <span class="project-emoji">💳</span>
+      <h1 class="project-title">AI Credit Card Bot</h1>
+      <p class="project-subtitle">Conversational AI for Intelligent Financial Services</p>
+    </div>
+  </section>
 
-    <!-- Overview Section -->
-    <section class="content-section">
-        <h2 class="section-title">Project Overview</h2>
-        <p class="content-text">
-            Built for a <span class="highlight">Bank of Baroda use case</span>, this intelligent chatbot revolutionizes credit card distribution by simulating human-like interactions and providing personalized financial guidance. The system leverages advanced NLP and machine learning to understand complex user queries and deliver tailored product recommendations.
-        </p>
-        <p class="content-text">
-            Developed as part of a <span class="highlight">Founder's Office internship assignment</span>, this project showcases the potential of conversational AI in transforming traditional banking experiences through intelligent automation and personalization.
-        </p>
+  <!-- Overview -->
+  <section class="content-section">
+    <h2 class="section-title">Project Overview</h2>
+    <p class="content-text">
+      Built for a <span class="highlight">Bank of Baroda</span> use case, this chatbot revolutionizes credit card distribution by simulating <span class="highlight">human-like conversations</span> and offering <span class="highlight">personalized financial recommendations</span>.
+    </p>
+    <p class="content-text">
+      Developed during a <span class="highlight">Founder's Office internship assignment</span>, this project showcases the potential of <strong>LLM-powered assistants</strong> in banking automation.
+    </p>
+  </section>
 
-        <div class="stats-grid">
-            <div class="stat-item">
-                <span class="stat-number">80%</span>
-                <div class="stat-label">Pitch Accuracy Rate</div>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">95%</span>
-                <div class="stat-label">Context Retention</div>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">3ms</span>
-                <div class="stat-label">Average Response Time</div>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">100%</span>
-                <div class="stat-label">CRM Integration</div>
-            </div>
-        </div>
-    </section>
+  <!-- Key Features -->
+  <section class="content-section">
+    <h2 class="section-title">Key Features</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <h3 class="feature-title">💬 Conversational Flow</h3>
+        <p class="feature-desc">Understands complex queries with contextual memory management.</p>
+      </div>
+      <div class="feature-card">
+        <h3 class="feature-title">🧠 Knowledge Retrieval</h3>
+        <p class="feature-desc">Pulls info from FAQs & docs via <span class="highlight">ChromaDB semantic search</span>.</p>
+      </div>
+      <div class="feature-card">
+        <h3 class="feature-title">🎯 Personalization</h3>
+        <p class="feature-desc">Uses <span class="highlight">OpenAI + Flan-T5</span> to suggest tailored financial products.</p>
+      </div>
+      <div class="feature-card">
+        <h3 class="feature-title">⚡ Real-Time</h3>
+        <p class="feature-desc">Response time ~3ms thanks to optimized pipelines.</p>
+      </div>
+    </div>
+  </section>
 
-    <!-- Key Features Section -->
-    <section class="content-section">
-        <h2 class="section-title">Key Features & Capabilities</h2>
-        <div class="features-grid">
-            <div class="feature-card">
-                <h3 class="feature-title">💬 Contextual Conversational Flow</h3>
-                <p class="feature-desc">
-                    Maintains sophisticated conversation state across multiple topics, dynamically adjusting responses based on user intent even when users switch topics mid-session.
-                </p>
-            </div>
-            <div class="feature-card">
-                <h3 class="feature-title">🧠 Knowledge Base Integration</h3>
-                <p class="feature-desc">
-                    Extracts precise answers from preloaded FAQs and SOP documents using advanced vector search and semantic matching algorithms for accurate information retrieval.
-                </p>
-            </div>
-            <div class="feature-card">
-                <h3 class="feature-title">🎯 LLM-Driven Personalization</h3>
-                <p class="feature-desc">
-                    Utilizes OpenAI and Google Flan-T5 models to generate highly personalized product pitches based on user profile data and inferred financial preferences.
-                </p>
-            </div>
-            <div class="feature-card">
-                <h3 class="feature-title">📈 Intelligent Upsell Logic</h3>
-                <p class="feature-desc">
-                    Custom rules engine extracts upselling triggers from user responses and intelligently suggests better alternatives or complementary add-ons.
-                </p>
-            </div>
-            <div class="feature-card">
-                <h3 class="feature-title">🔗 CRM Integration (Mock)</h3>
-                <p class="feature-desc">
-                    Accepts comprehensive inputs like age, salary, and credit score to simulate real CRM-integrated assistant behavior for authentic user experiences.
-                </p>
-            </div>
-            <div class="feature-card">
-                <h3 class="feature-title">⚡ Real-time Processing</h3>
-                <p class="feature-desc">
-                    Delivers instant responses through optimized processing pipelines, ensuring seamless user interaction without noticeable delays.
-                </p>
-            </div>
-        </div>
-    </section>
+  <!-- Tech Stack -->
+  <section class="content-section">
+    <h2 class="section-title">Technology Stack</h2>
+    <div class="tech-stack">
+      <span class="tech-item">Python</span>
+      <span class="tech-item">Streamlit</span>
+      <span class="tech-item">LangChain</span>
+      <span class="tech-item">OpenAI GPT</span>
+      <span class="tech-item">Flan-T5</span>
+      <span class="tech-item">ChromaDB</span>
+    </div>
+  </section>
 
-    <!-- Technical Architecture -->
-    <section class="content-section">
-        <h2 class="section-title">System Architecture</h2>
-        <div class="architecture-flow">
-            <div class="flow-step">
-                <div class="flow-number">1</div>
-                <div class="flow-content">
-                    <div class="flow-title">User Input Processing</div>
-                    <div class="flow-desc">Natural language processing and intent recognition using advanced NLP models</div>
-                </div>
-            </div>
-            <div class="flow-step">
-                <div class="flow-number">2</div>
-                <div class="flow-content">
-                    <div class="flow-title">Context Management</div>
-                    <div class="flow-desc">Maintains conversation state and user preferences across multiple interactions</div>
-                </div>
-            </div>
-            <div class="flow-step">
-                <div class="flow-number">3</div>
-                <div class="flow-content">
-                    <div class="flow-title">Knowledge Retrieval</div>
-                    <div class="flow-desc">Vector-based search through ChromaDB to find relevant FAQs and policy information</div>
-                </div>
-            </div>
-            <div class="flow-step">
-                <div class="flow-number">4</div>
-                <div class="flow-content">
-                    <div class="flow-title">LLM Processing</div>
-                    <div class="flow-desc">OpenAI/Flan-T5 models generate contextually appropriate and personalized responses</div>
-                </div>
-            </div>
-            <div class="flow-step">
-                <div class="flow-number">5</div>
-                <div class="flow-content">
-                    <div class="flow-title">Response Optimization</div>
-                    <div class="flow-desc">Applies business rules and upselling logic before delivering final response</div>
-                </div>
-            </div>
-        </div>
-    </section>
+  <!-- Impact -->
+  <section class="content-section">
+    <h2 class="section-title">Impact</h2>
+    <p class="content-text">
+      Achieved <span class="highlight">80% accuracy</span> in product recommendations, <span class="highlight">95% context retention</span>, and demonstrated <span class="highlight">production-ready pipelines</span> for enterprise banking.
+    </p>
+  </section>
 
-    <!-- Demo Section -->
-    <section class="content-section">
-        <div class="demo-section">
-            <h2 class="section-title">Live Interaction Demo</h2>
-            <p class="content-text">
-                Experience the conversational flow and intelligent responses of the AI Credit Card Bot through this interactive demonstration.
-            </p>
-            
-            <div class="demo-mockup">
-                <div class="chat-interface">
-                    <div class="chat-message user-message">
-                        Hi, I'm looking for a credit card. I'm 28, earn ₹8 lakhs annually, and have a credit score of 750.
-                    </div>
-                    <div class="chat-message bot-message">
-                        Great! With your excellent credit score of 750 and solid income, you're eligible for premium cards. Based on your profile, I'd recommend our <strong>Bank of Baroda Premier Card</strong> - it offers 2x rewards on dining and travel, perfect for young professionals. Would you like to know more about its benefits?
-                    </div>
-                    <div class="chat-message user-message">
-                        What about cashback cards? I spend a lot on groceries and fuel.
-                    </div>
-                    <div class="chat-message bot-message">
-                        Perfect! For your spending pattern, the <strong>BoB Cashback Card</strong> would be ideal - 5% cashback on groceries and fuel (up to ₹1000/month), plus 1% on all other purchases. With your income level, I can also offer the <strong>BoB Energy Card</strong> with enhanced fuel benefits. Shall I compare both options for you?
-                    </div>
-                    <div class="typing-indicator">
-                        <span>AI is analyzing your preferences</span>
-                        <div class="typing-dots">
-                            <div class="typing-dot"></div>
-                            <div class="typing-dot"></div>
-                            <div class="typing-dot"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Technical Stack -->
-    <section class="content-section">
-        <h2 class="section-title">Technology Stack</h2>
-        <p class="content-text">
-            Built using cutting-edge AI and machine learning technologies to ensure robust performance and intelligent interactions.
-        </p>
-        <div class="tech-stack">
-            <span class="tech-item">Python</span>
-            <span class="tech-item">Streamlit</span>
-            <span class="tech-item">LangChain</span>
-            <span class="tech-item">OpenAI GPT</span>
-            <span class="tech-item">HuggingFace Transformers</span>
-            <span class="tech-item">Google Flan-T5</span>
-            <span class="tech-item">ChromaDB</span>
-            <span class="tech-item">Vector Search</span>
-            <span class="tech-item">Google Colab</span>
-            <span class="tech-item">Virtual Environments</span>
-        </div>
-    </section>
-
-    <!-- Challenges & Solutions -->
-    <section class="content-section">
-        <div class="challenge-section">
-            <h2 class="section-title">Challenges & Solutions</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <h3 class="feature-title">🧩 Context Switching</h3>
-                    <p class="feature-desc">
-                        <span class="highlight">Challenge:</span> Users frequently change topics mid-conversation, losing context.<br><br>
-                        <span class="highlight">Solution:</span> Implemented state management with LangChain memory modules to maintain conversation history and seamlessly handle topic transitions.
-                    </p>
-                </div>
-                <div class="feature-card">
-                    <h3 class="feature-title">📊 Personalization Accuracy</h3>
-                    <p class="feature-desc">
-                        <span class="highlight">Challenge:</span> Generic responses without considering user financial profile.<br><br>
-                        <span class="highlight">Solution:</span> Integrated CRM-style inputs with LLM prompting to generate tailored recommendations based on income, age, and credit score.
-                    </p>
-                </div>
-                <div class="feature-card">
-                    <h3 class="feature-title">🔍 Knowledge Retrieval</h3>
-                    <p class="feature-desc">
-                        <span class="highlight">Challenge:</span> Accurate extraction from extensive FAQ and policy documents.<br><br>
-                        <span class="highlight">Solution:</span> Implemented vector-based semantic search using ChromaDB for precise information retrieval with 95% accuracy.
-                    </p>
-                </div>
-                <div class="feature-card">
-                    <h3 class="feature-title">⚡ Response Speed</h3>
-                    <p class="feature-desc">
-                        <span class="highlight">Challenge:</span> LLM processing causing delays in user interaction.<br><br>
-                        <span class="highlight">Solution:</span> Optimized pipeline with parallel processing and caching, achieving 3ms average response time.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Impact & Achievements -->
-    <section class="content-section">
-        <h2 class="section-title">Impact & Achievements</h2>
-        <div class="achievements-grid">
-            <div class="achievement-card">
-                <span class="achievement-icon">🎯</span>
-                <h3 class="achievement-title">Pitch Accuracy</h3>
-                <p class="achievement-desc">Achieved 80% accuracy in relevant product recommendations during comprehensive test cases</p>
-            </div>
-            <div class="achievement-card">
-                <span class="achievement-icon">🏢</span>
-                <h3 class="achievement-title">Corporate Recognition</h3>
-                <p class="achievement-desc">Successfully presented to Bank of Baroda as part of Founder's Office internship assignment</p>
-            </div>
-            <div class="achievement-card">
-                <span class="achievement-icon">🚀</span>
-                <h3 class="achievement-title">Production Ready</h3>
-                <p class="achievement-desc">Demonstrated full LLM integration with minimal-code pipelines ready for deployment</p>
-            </div>
-            <div class="achievement-card">
-                <span class="achievement-icon">💡</span>
-                <h3 class="achievement-title">Innovation</h3>
-                <p class="achievement-desc">Pioneered conversational AI approach for traditional banking customer service</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Future Enhancements -->
-    <section class="content-section">
-        <h2 class="section-title">Future Enhancements</h2>
-        <p class="content-text">
-            The AI Credit Card Bot is designed for continuous evolution and integration with enterprise banking systems.
-        </p>
-        <div class="features-grid">
-            <div class="feature-card">
-                <h3 class="feature-title">🔄 Real CRM Integration</h3>
-                <p class="feature-desc">
-                    Full integration with bank's existing CRM systems for real-time customer data access and automated lead management.
-                </p>
-            </div>
-            <div class="feature-card">
-                <h3 class="feature-title">🧠 Advanced ML Models</h3>
-                <p class="feature-desc">
-                    Implementation of custom-trained models on banking data for even more accurate financial product recommendations.
-                </p>
-            </div>
-            <div class="feature-card">
-                <h3 class="feature-title">📱 Multi-Channel Deployment</h3>
-                <p class="feature-desc">
-                    Expansion to WhatsApp, mobile apps, and voice assistants for omnichannel customer engagement.
-                </p>
-            </div>
-            <div class="feature-card">
-                <h3 class="feature-title">📈 Analytics Dashboard</h3>
-                <p class="feature-desc">
-                    Comprehensive analytics for conversation insights, conversion tracking, and performance optimization.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <script>
-        // Smooth scrolling for internal links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-        // Add subtle animation on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        // Observe feature cards for animation
-        document.querySelectorAll('.feature-card, .achievement-card, .stat-item').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'all 0.6s ease';
-            observer.observe(el);
-        });
-
-        // Demo chat typing effect
-        const demoMessages = document.querySelectorAll('.chat-message');
-        const typingIndicator = document.querySelector('.typing-indicator');
-        
-        let isTypingVisible = false;
-        
-        const toggleTyping = () => {
-            if (!isTypingVisible) {
-                typingIndicator.style.display = 'flex';
-                setTimeout(() => {
-                    typingIndicator.style.display = 'none';
-                }, 2000);
-                isTypingVisible = true;
-                setTimeout(() => { isTypingVisible = false; }, 5000);
-            }
-        };
-
-        // Show typing indicator when demo section is in view
-        const demoObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {if (entry.isIntersecting) {
-                toggleTyping();
-            }
-        });
-    });
-    demoObserver.observe(document.querySelector('.demo-section'));
-</script>
+  <footer style="text-align:center; color:#777; font-size:0.9rem; padding:40px 20px; border-top:1px solid #222;">
+    © 2025 Yuri Verma • AI for Financial Innovation
+  </footer>
 </body>
 </html>

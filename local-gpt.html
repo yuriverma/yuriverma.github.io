@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LocalGPT Delhi Assistant - Yuri Verma</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0a0a0a;
+      color: #e8e8e8;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    html { scroll-behavior: smooth; }
+
+    /* Header */
+    .header {
+      position: fixed; top: 0; left: 0; right: 0;
+      background: rgba(10, 10, 10, 0.95);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      padding: 20px 0;
+      border-bottom: 1px solid #333;
+    }
+    .header-content {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 20px;
+    }
+    .logo {
+      font-family: 'Cinzel', serif;
+      font-size: 1.5rem; color: #b8860b;
+      text-decoration: none; font-weight: 600;
+    }
+    .back-btn {
+      background: linear-gradient(135deg, #b8860b, #d4af37);
+      color: #0a0a0a; padding: 10px 20px;
+      border-radius: 5px; text-decoration: none;
+      font-weight: 600; transition: all 0.3s;
+    }
+    .back-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(184,134,11,0.3); }
+
+    /* Hero */
+    .project-hero {
+      height: 100vh;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%);
+      display: flex; align-items: center; justify-content: flex-start;
+      text-align: left; position: relative;
+      margin-top: 80px; overflow: hidden;
+      padding-left: 10%;
+    }
+    .project-hero::after {
+      content: "";
+      position: absolute; top: 0; right: 0; bottom: 0;
+      width: 40%;
+      background: url('images/peaky-potrait.jpg') no-repeat center right/cover;
+      opacity: 0.07; pointer-events: none;
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      max-width: 700px; padding: 0 20px;
+    }
+    .project-emoji {
+      font-size: 4rem; margin-bottom: 20px; display: block;
+    }
+    .project-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(3rem, 7vw, 4.5rem);
+      color: #b8860b; margin-bottom: 20px;
+      font-weight: 700; text-shadow: 0 15px 40px rgba(184,134,11,0.4);
+    }
+    .project-subtitle {
+      font-size: 1.4rem; color: #d0d0d0; font-style: italic;
+    }
+
+    /* Content Sections */
+    .content-section {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 100px 20px;
+    }
+    .section-title {
+      font-family: 'Cinzel', serif;
+      font-size: 2.5rem; color: #b8860b;
+      margin-bottom: 40px; position: relative;
+    }
+    .section-title::after {
+      content: ''; position: absolute;
+      bottom: -10px; left: 0;
+      width: 60px; height: 3px;
+      background: linear-gradient(90deg, #b8860b, transparent);
+    }
+    .content-text {
+      font-size: 1.1rem;
+      color: #d0d0d0;
+      line-height: 1.8;
+      margin-bottom: 30px;
+    }
+    .highlight { color: #b8860b; font-weight: 600; }
+
+    /* Features Grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin: 60px 0;
+    }
+    .feature-card {
+      background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
+      border: 1px solid #333;
+      border-radius: 15px;
+      padding: 30px;
+      transition: all 0.3s;
+    }
+    .feature-card:hover {
+      border-color: #b8860b;
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(184,134,11,0.1);
+    }
+    .feature-title {
+      font-family: 'Cinzel', serif;
+      color: #b8860b;
+      font-size: 1.3rem;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+    .feature-desc { color: #c0c0c0; }
+
+    /* Tech Stack */
+    .tech-stack {
+      display: flex; flex-wrap: wrap; gap: 15px; margin: 40px 0;
+    }
+    .tech-item {
+      background: rgba(184,134,11,0.1);
+      color: #b8860b;
+      padding: 10px 18px;
+      border-radius: 25px;
+      font-weight: 500;
+      border: 1px solid rgba(184,134,11,0.3);
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <a href="index.html" class="logo">Yuri Verma</a>
+      <a href="index.html#projects" class="back-btn">← Back to Portfolio</a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="project-hero">
+    <div class="hero-content">
+      <span class="project-emoji">🛺</span>
+      <h1 class="project-title">LocalGPT Delhi Assistant</h1>
+      <p class="project-subtitle">An offline AI trained on Delhi’s heartbeat — metro, buses, food, and events.</p>
+    </div>
+  </section>
+
+  <!-- Overview -->
+  <section class="content-section">
+    <h2 class="section-title">Project Overview</h2>
+    <p class="content-text">
+      <span class="highlight">LocalGPT</span> is a city-specific offline AI assistant built with <span class="highlight">LangChain</span> and <span class="highlight">ChromaDB</span>, trained on curated datasets about Delhi’s transport, food culture, and events.  
+      Unlike cloud-only chatbots, it runs locally for <span class="highlight">low-cost, private, and reliable</span> usage.
+    </p>
+    <p class="content-text">
+      From <strong>metro routes</strong> to <strong>DTC bus info</strong> to <strong>local recommendations</strong>, LocalGPT is designed as a personalized Delhi guide that works seamlessly without external APIs.
+    </p>
+  </section>
+
+  <!-- Features -->
+  <section class="content-section">
+    <h2 class="section-title">Key Features</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <h3 class="feature-title">🚇 Metro & Bus Guidance</h3>
+        <p class="feature-desc">Accurate routes, timings, and interchange info for Delhi Metro & DTC buses.</p>
+      </div>
+      <div class="feature-card">
+        <h3 class="feature-title">🍴 Food & Hangouts</h3>
+        <p class="feature-desc">Suggests trending Delhi spots — from Chandni Chowk street food to Cyberhub cafes.</p>
+      </div>
+      <div class="feature-card">
+        <h3 class="feature-title">🎭 Local Events</h3>
+        <p class="feature-desc">Covers real-time and cultural events for an always updated city vibe.</p>
+      </div>
+      <div class="feature-card">
+        <h3 class="feature-title">💻 Offline AI</h3>
+        <p class="feature-desc">No dependency on paid APIs — powered by local vector search and embeddings.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tech Stack -->
+  <section class="content-section">
+    <h2 class="section-title">Technology Stack</h2>
+    <div class="tech-stack">
+      <span class="tech-item">Python</span>
+      <span class="tech-item">LangChain</span>
+      <span class="tech-item">ChromaDB</span>
+      <span class="tech-item">Streamlit</span>
+      <span class="tech-item">Custom Datasets</span>
+    </div>
+  </section>
+
+  <!-- Impact -->
+  <section class="content-section">
+    <h2 class="section-title">Impact</h2>
+    <p class="content-text">
+      LocalGPT demonstrates how <span class="highlight">localized AI assistants</span> can solve urban challenges at scale.  
+      It eliminates dependency on unstable APIs, runs on <strong>low-RAM devices</strong>, and scales as a <strong>city guide prototype</strong> for other metros in India.
+    </p>
+  </section>
+
+  <footer style="text-align:center; color:#777; font-size:0.9rem; padding:40px 20px; border-top:1px solid #222;">
+    © 2025 Yuri Verma • Built with ❤️ for Delhi
+  </footer>
+</body>
+</html>

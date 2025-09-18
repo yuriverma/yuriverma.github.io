@@ -1,580 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopping Recommender System - Yuri Verma</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping Recommender System - Yuri Verma</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#e8e8e8;line-height:1.6;overflow-x:hidden;}
+    html{scroll-behavior:smooth;}
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #0a0a0a;
-            color: #e8e8e8;
-            line-height: 1.6;
-        }
+    /* Header */
+    .header{position:fixed;top:0;left:0;right:0;background:rgba(10,10,10,0.95);backdrop-filter:blur(10px);z-index:1000;padding:20px 0;border-bottom:1px solid #333;}
+    .header-content{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:0 20px;}
+    .logo{font-family:'Cinzel',serif;font-size:1.5rem;color:#b8860b;text-decoration:none;font-weight:600;}
+    .back-btn{background:linear-gradient(135deg,#b8860b,#d4af37);color:#0a0a0a;padding:10px 20px;border-radius:5px;text-decoration:none;font-weight:600;transition:all .3s;}
+    .back-btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(184,134,11,0.3);}
 
-        html {
-            scroll-behavior: smooth;
-        }
+    /* Hero */
+    .project-hero{
+      height:100vh;
+      background:linear-gradient(135deg,#0a0a0a 0%,#1a1a1a 50%,#0f0f0f 100%);
+      display:flex;align-items:center;justify-content:flex-start;
+      text-align:left;position:relative;
+      margin-top:80px;overflow:hidden;
+      padding-left:10%;
+    }
+    .project-hero::after{
+      content:"";position:absolute;top:0;right:0;bottom:0;width:40%;
+      background:url('images/peaky-potrait.jpg') no-repeat center right/cover;
+      opacity:0.07;pointer-events:none;
+    }
+    .hero-content{position:relative;z-index:2;max-width:700px;padding:0 20px;}
+    .project-emoji{font-size:4rem;margin-bottom:20px;display:block;animation:float 4s ease-in-out infinite;}
+    @keyframes float{0%,100%{transform:translateY(0) rotate(-3deg);}50%{transform:translateY(-15px) rotate(3deg);}}
+    .project-title{font-family:'Cinzel',serif;font-size:clamp(3rem,7vw,4.5rem);color:#b8860b;margin-bottom:20px;font-weight:700;text-shadow:0 15px 40px rgba(184,134,11,0.4);}
+    .project-subtitle{font-size:1.4rem;color:#d0d0d0;font-style:italic;}
 
-        /* Header */
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            padding: 20px 0;
-            border-bottom: 1px solid #333;
-        }
+    /* Sections */
+    .content-section{max-width:1000px;margin:0 auto;padding:100px 20px;}
+    .section-title{font-family:'Cinzel',serif;font-size:2.5rem;color:#b8860b;margin-bottom:40px;position:relative;}
+    .section-title::after{content:'';position:absolute;bottom:-10px;left:0;width:60px;height:3px;background:linear-gradient(90deg,#b8860b,transparent);}
+    .content-text{font-size:1.1rem;color:#d0d0d0;line-height:1.8;margin-bottom:30px;}
+    .highlight{color:#b8860b;font-weight:600;}
 
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-        }
+    /* Grid */
+    .features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:30px;margin:60px 0;}
+    .feature-card{background:linear-gradient(145deg,#1a1a1a,#0f0f0f);border:1px solid #333;border-radius:15px;padding:30px;transition:all .3s;}
+    .feature-card:hover{border-color:#b8860b;transform:translateY(-6px);box-shadow:0 12px 25px rgba(184,134,11,0.15);}
+    .feature-title{font-family:'Cinzel',serif;color:#b8860b;font-size:1.3rem;margin-bottom:10px;font-weight:600;}
+    .feature-desc{color:#c0c0c0;}
 
-        .logo {
-            font-family: 'Cinzel', serif;
-            font-size: 1.5rem;
-            color: #b8860b;
-            text-decoration: none;
-            font-weight: 600;
-        }
+    /* Stats */
+    .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:30px;margin:60px 0;}
+    .stat-item{text-align:center;padding:35px 25px;background:linear-gradient(145deg,#1a1a1a,#0f0f0f);border-radius:15px;border:1px solid #333;}
+    .stat-number{font-family:'Cinzel',serif;font-size:2.5rem;color:#b8860b;font-weight:700;display:block;}
+    .stat-label{color:#d0d0d0;font-size:1rem;margin-top:10px;}
 
-        .back-btn {
-            background: linear-gradient(135deg, #b8860b, #d4af37);
-            color: #0a0a0a;
-            padding: 10px 20px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .back-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(184, 134, 11, 0.3);
-        }
-
-        /* Hero Section */
-        .project-hero {
-            height: 60vh;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative;
-            margin-top: 80px;
-        }
-
-        .project-hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 50% 30%, rgba(184, 134, 11, 0.1) 0%, transparent 70%);
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: 800px;
-            padding: 0 20px;
-        }
-
-        .project-emoji {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            display: block;
-        }
-
-        .project-title {
-            font-family: 'Cinzel', serif;
-            font-size: clamp(2.5rem, 6vw, 4rem);
-            color: #b8860b;
-            margin-bottom: 20px;
-            font-weight: 700;
-        }
-
-        .project-subtitle {
-            font-size: 1.3rem;
-            color: #d0d0d0;
-            font-style: italic;
-        }
-
-        /* Content Sections */
-        .content-section {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 80px 20px;
-        }
-
-        .section-title {
-            font-family: 'Cinzel', serif;
-            font-size: 2.5rem;
-            color: #b8860b;
-            margin-bottom: 40px;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 60px;
-            height: 3px;
-            background: #b8860b;
-        }
-
-        .content-text {
-            font-size: 1.1rem;
-            color: #d0d0d0;
-            line-height: 1.8;
-            margin-bottom: 30px;
-        }
-
-        .highlight {
-            color: #b8860b;
-            font-weight: 600;
-        }
-
-        /* Features Grid */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin: 60px 0;
-        }
-
-        .feature-card {
-            background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
-            border: 1px solid #333;
-            border-radius: 10px;
-            padding: 30px;
-            transition: all 0.3s ease;
-        }
-
-        .feature-card:hover {
-            border-color: #b8860b;
-            transform: translateY(-5px);
-        }
-
-        .feature-title {
-            font-family: 'Cinzel', serif;
-            color: #b8860b;
-            font-size: 1.3rem;
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-
-        .feature-desc {
-            color: #c0c0c0;
-            line-height: 1.6;
-        }
-
-        /* Tech Stack */
-        .tech-stack {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin: 40px 0;
-        }
-
-        .tech-item {
-            background: rgba(184, 134, 11, 0.1);
-            color: #b8860b;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: 500;
-            border: 1px solid rgba(184, 134, 11, 0.3);
-        }
-
-        /* Stats */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            margin: 60px 0;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 30px;
-            background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
-            border-radius: 10px;
-            border: 1px solid #333;
-        }
-
-        .stat-number {
-            font-family: 'Cinzel', serif;
-            font-size: 2.5rem;
-            color: #b8860b;
-            font-weight: 700;
-            display: block;
-        }
-
-        .stat-label {
-            color: #d0d0d0;
-            font-size: 1rem;
-            margin-top: 10px;
-        }
-
-        /* Challenge Section */
-        .challenge-section {
-            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
-            margin: 80px 0;
-            border-radius: 20px;
-            padding: 60px;
-            border: 1px solid #333;
-        }
-
-        /* Algorithm Flow */
-        .algorithm-flow {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin: 40px 0;
-        }
-
-        .algorithm-card {
-            padding: 30px;
-            background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
-            border-radius: 10px;
-            border: 1px solid #333;
-            border-left: 3px solid #b8860b;
-        }
-
-        .algorithm-title {
-            color: #b8860b;
-            font-weight: 600;
-            margin-bottom: 15px;
-            font-size: 1.2rem;
-        }
-
-        .algorithm-desc {
-            color: #c0c0c0;
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-
-        .algorithm-steps {
-            list-style: none;
-            padding: 0;
-        }
-
-        .algorithm-steps li {
-            color: #d0d0d0;
-            margin-bottom: 8px;
-            padding-left: 20px;
-            position: relative;
-        }
-
-        .algorithm-steps li::before {
-            content: '→';
-            color: #b8860b;
-            position: absolute;
-            left: 0;
-            font-weight: bold;
-        }
-
-        /* Roadmap Section */
-        .roadmap-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin: 40px 0;
-        }
-
-        .roadmap-item {
-            background: rgba(184, 134, 11, 0.05);
-            border: 1px solid rgba(184, 134, 11, 0.3);
-            border-radius: 8px;
-            padding: 25px;
-            position: relative;
-        }
-
-        .roadmap-status {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .status-planned {
-            background: rgba(255, 165, 0, 0.2);
-            color: #ffa500;
-        }
-
-        .status-progress {
-            background: rgba(0, 191, 255, 0.2);
-            color: #00bfff;
-        }
-
-        .roadmap-title {
-            color: #b8860b;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
-        .roadmap-desc {
-            color: #c0c0c0;
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-
-        /* Mobile Responsiveness */
-        @media (max-width: 768px) {
-            .header-content {
-                padding: 0 15px;
-            }
-
-            .content-section {
-                padding: 60px 15px;
-            }
-
-            .features-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            .challenge-section {
-                padding: 40px 20px;
-                margin: 60px 0;
-            }
-
-            .tech-stack {
-                gap: 10px;
-            }
-
-            .tech-item {
-                padding: 6px 12px;
-                font-size: 0.9rem;
-            }
-
-            .algorithm-flow {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            .roadmap-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-        }
-    </style>
+    /* Tech Stack */
+    .tech-stack{display:flex;flex-wrap:wrap;gap:15px;margin:40px 0;}
+    .tech-item{background:rgba(184,134,11,0.1);color:#b8860b;padding:10px 18px;border-radius:25px;font-weight:500;border:1px solid rgba(184,134,11,0.3);}
+  </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="header-content">
-            <a href="index.html" class="logo">Yuri Verma</a>
-            <a href="index.html#projects" class="back-btn">← Back to Portfolio</a>
-        </div>
-    </header>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <a href="index.html" class="logo">Yuri Verma</a>
+      <a href="index.html#projects" class="back-btn">← Back to Portfolio</a>
+    </div>
+  </header>
 
-    <!-- Project Hero -->
-    <section class="project-hero">
-        <div class="hero-content">
-            <span class="project-emoji">🛍️</span>
-            <h1 class="project-title">Shopping Recommender System</h1>
-            <p class="project-subtitle">Personalized E-commerce Intelligence Engine</p>
-        </div>
-    </section>
+  <!-- Hero -->
+  <section class="project-hero">
+    <div class="hero-content">
+      <span class="project-emoji">🛍️</span>
+      <h1 class="project-title">Shopping Recommender System</h1>
+      <p class="project-subtitle">Personalized E-commerce Intelligence Engine</p>
+    </div>
+  </section>
 
-    <!-- Overview Section -->
-    <section class="content-section">
-        <h2 class="section-title">Project Overview</h2>
-        <p class="content-text">
-            This intelligent recommender system transforms the e-commerce experience by delivering <span class="highlight">hyper-personalized product suggestions</span> that adapt to individual user behavior and preferences. Built with advanced machine learning algorithms, the system addresses the cold start problem while continuously improving recommendation accuracy.
-        </p>
-        <p class="content-text">
-            Conceived as a <span class="highlight">potential startup MVP</span> after networking at a Microsoft event, this project showcases the power of combining collaborative filtering, content-based algorithms, and user profiling to create a comprehensive recommendation engine that drives engagement and conversion.
-        </p>
+  <!-- Overview -->
+  <section class="content-section">
+    <h2 class="section-title">Project Overview</h2>
+    <p class="content-text">
+      An intelligent <span class="highlight">recommender engine</span> delivering <span class="highlight">hyper-personalized product suggestions</span> based on user behavior, product metadata, and hybrid ML algorithms.
+    </p>
+    <p class="content-text">
+      Initially conceived as a <span class="highlight">startup MVP</span>, this project blends <strong>collaborative filtering + content-based intelligence</strong> to boost user engagement and solve the cold start problem.
+    </p>
+  </section>
 
-        <div class="stats-grid">
-            <div class="stat-item">
-                <span class="stat-number">40%</span>
-                <div class="stat-label">Relevance Score Boost</div>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">85%</span>
-                <div class="stat-label">Cold Start Success Rate</div>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">2.3x</span>
-                <div class="stat-label">User Engagement Increase</div>
-            </div>
-        </div>
-    </section>
+  <!-- Stats -->
+  <section class="content-section">
+    <h2 class="section-title">Key Metrics</h2>
+    <div class="stats-grid">
+      <div class="stat-item"><span class="stat-number">40%</span><div class="stat-label">Relevance Boost</div></div>
+      <div class="stat-item"><span class="stat-number">85%</span><div class="stat-label">Cold Start Success</div></div>
+      <div class="stat-item"><span class="stat-number">2.3x</span><div class="stat-label">Engagement Increase</div></div>
+    </div>
+  </section>
 
-    <!-- Key Features Section -->
-    <section class="content-section">
-        <h2 class="section-title">Core Features & Capabilities</h2>
-        <div class="features-grid">
-            <div class="feature-card">
-                <h3 class="feature-title">🤝 Collaborative Filtering Engine</h3>
-                <p class="feature-desc">
-                    Advanced user-user similarity matrix using cosine distance to identify behavioral patterns and predict preferences based on similar user interactions and purchase history.
-                </p>
-            </div>
-            <div class="feature-card">
-                <h3 class="feature-title">🧠 Content-Based Intelligence</h3>
-                <p class="feature-desc">
-                    Deep analysis of product metadata including tags, categories, brands, and specifications to recommend items with similar characteristics and attributes.
-                </p>
-            </div>
-            <div class="feature-card">
-                <h3 class="feature-title">🚀 Cold Start Solution</h3>
-                <p class="feature-desc">
-                    Innovative customer questionnaire system deployed during onboarding to bootstrap personalization for new users without browsing history or prior interactions.
-                </p>
-            </div>
-            <div class="feature-card">
-                <h3 class="feature-title">📊 Behavior Analysis</h3>
-                <p class="feature-desc">
-                    Real-time tracking and analysis of user interactions, including click-through rates, time spent on products, and purchase patterns to refine recommendations.
-                </p>
-            </div>
-            <div class="feature-card">
-                <h3 class="feature-title">🎯 Hybrid Recommendation</h3>
-                <p class="feature-desc">
-                    Intelligent combination of collaborative and content-based filtering with weighted algorithms to provide the most accurate and diverse product suggestions.
-                </p>
-            </div>
-            <div class="feature-card">
-                <h3 class="feature-title">⚡ Real-Time Processing</h3>
-                <p class="feature-desc">
-                    Efficient processing pipeline delivering instant recommendations with minimal latency, ensuring seamless user experience across all platform interactions.
-                </p>
-            </div>
-        </div>
-    </section>
+  <!-- Features -->
+  <section class="content-section">
+    <h2 class="section-title">Core Features</h2>
+    <div class="features-grid">
+      <div class="feature-card"><h3 class="feature-title">🤝 Collaborative Filtering</h3><p class="feature-desc">Finds user similarity via cosine distance to recommend products.</p></div>
+      <div class="feature-card"><h3 class="feature-title">🧠 Content-Based</h3><p class="feature-desc">Analyzes tags, categories & brands to suggest similar items.</p></div>
+      <div class="feature-card"><h3 class="feature-title">🚀 Cold Start</h3><p class="feature-desc">Bootstraps personalization for new users with onboarding inputs.</p></div>
+      <div class="feature-card"><h3 class="feature-title">🎯 Hybrid Model</h3><p class="feature-desc">Weighted combination of CF + CBF ensures accuracy & diversity.</p></div>
+    </div>
+  </section>
 
-    <!-- Algorithm Architecture -->
-    <section class="content-section">
-        <h2 class="section-title">Algorithm Architecture</h2>
-        <div class="algorithm-flow">
-            <div class="algorithm-card">
-                <div class="algorithm-title">Collaborative Filtering</div>
-                <div class="algorithm-desc">
-                    Identifies users with similar preferences and recommends items based on collective behavior patterns.
-                </div>
-                <ul class="algorithm-steps">
-                    <li>Build user-item interaction matrix</li>
-                    <li>Calculate user similarity using cosine distance</li>
-                    <li>Identify top-k similar users</li>
-                    <li>Generate recommendations based on similar users' preferences</li>
-                </ul>
-            </div>
-            <div class="algorithm-card">
-                <div class="algorithm-title">Content-Based Filtering</div>
-                <div class="algorithm-desc">
-                    Analyzes product features and user preferences to suggest items with similar characteristics.
-                </div>
-                <ul class="algorithm-steps">
-                    <li>Extract product feature vectors</li>
-                    <li>Build user preference profiles</li>
-                    <li>Calculate item similarity scores</li>
-                    <li>Recommend items matching user preferences</li>
-                </ul>
-            </div>
-        </div>
-    </section>
+  <!-- Tech Stack -->
+  <section class="content-section">
+    <h2 class="section-title">Technology Stack</h2>
+    <div class="tech-stack">
+      <span class="tech-item">Python</span>
+      <span class="tech-item">Pandas</span>
+      <span class="tech-item">scikit-learn</span>
+      <span class="tech-item">Streamlit</span>
+      <span class="tech-item">NumPy</span>
+      <span class="tech-item">Google Sheets API</span>
+    </div>
+  </section>
 
-    <!-- Technical Implementation -->
-    <section class="content-section">
-        <h2 class="section-title">Technical Implementation</h2>
-        <div class="challenge-section">
-            <h3 class="feature-title">🔧 System Architecture</h3>
-            <p class="content-text">
-                The recommendation engine is built using a <span class="highlight">modular architecture</span> with separate components for data processing, model training, and real-time inference. The system leverages pandas for data manipulation, scikit-learn for machine learning algorithms, and Streamlit for the interactive interface.
-            </p>
-            <p class="content-text">
-                Key technical innovations include <span class="highlight">dynamic weight adjustment</span> between collaborative and content-based filtering based on data availability, and an efficient similarity computation system that scales with user base growth.
-            </p>
-        </div>
+  <!-- Impact -->
+  <section class="content-section">
+    <h2 class="section-title">Impact</h2>
+    <p class="content-text">
+      Outperformed rule-based systems with a <span class="highlight">40% improvement</span> in recommendation relevance, demonstrating strong viability as a scalable product.
+    </p>
+  </section>
 
-        <h3 class="section-title">Technology Stack</h3>
-        <div class="tech-stack">
-            <span class="tech-item">Python</span>
-            <span class="tech-item">Pandas</span>
-            <span class="tech-item">scikit-learn</span>
-            <span class="tech-item">NumPy</span>
-            <span class="tech-item">Streamlit</span>
-            <span class="tech-item">Matplotlib</span>
-            <span class="tech-item">Seaborn</span>
-            <span class="tech-item">Jupyter Notebooks</span>
-            <span class="tech-item">Google Sheets API</span>
-            <span class="tech-item">Machine Learning</span>
-        </div>
-    </section>
-
-    <!-- Future Roadmap -->
-    <section class="content-section">
-        <h2 class="section-title">Future Roadmap</h2>
-        <div class="roadmap-grid">
-            <div class="roadmap-item">
-                <div class="roadmap-status status-progress">In Progress</div>
-                <div class="roadmap-title">Frontend Store Integration</div>
-                <div class="roadmap-desc">
-                    Developing a complete e-commerce frontend to showcase the recommendation system in a real shopping environment.
-                </div>
-            </div>
-            <div class="roadmap-item">
-                <div class="roadmap-status status-planned">Planned</div>
-                <div class="roadmap-title">Analytics Dashboard</div>
-                <div class="roadmap-desc">
-                    Building comprehensive analytics to track recommendation performance, CTR, and conversion metrics.
-                </div>
-            </div>
-            <div class="roadmap-item">
-                <div class="roadmap-status status-planned">Planned</div>
-                <div class="roadmap-title">Deep Learning Integration</div>
-                <div class="roadmap-desc">
-                    Implementing neural collaborative filtering and deep learning models for enhanced recommendation accuracy.
-                </div>
-            </div>
-            <div class="roadmap-item">
-                <div class="roadmap-status status-planned">Planned</div>
-                <div class="roadmap-title">Multi-Platform Deployment</div>
-                <div class="roadmap-desc">
-                    Scaling the system for deployment across web, mobile, and API platforms with real-time processing capabilities.
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Impact & Results -->
-    <section class="content-section">
-        <h2 class="section-title">Impact & Results</h2>
-        <p class="content-text">
-            The system demonstrated a <span class="highlight">40% improvement in recommendation relevance</span> during testing phases, significantly outperforming traditional rule-based systems and basic collaborative filtering approaches.
-        </p>
-        <p class="content-text">
-            The cold start solution achieved an <span class="highlight">85% success rate</span> in generating meaningful recommendations for new users, addressing one of the biggest challenges in recommendation systems.
-        </p>
-        <p class="content-text">
-            This project has garnered interest as a <span class="highlight">potential startup MVP</span>, with plans to integrate advanced analytics and deploy across multiple e-commerce platforms to revolutionize personalized shopping experiences.
-        </p>
-    </section>
+  <footer style="text-align:center;color:#777;font-size:0.9rem;padding:40px 20px;border-top:1px solid #222;">
+    © 2025 Yuri Verma • Smarter E-commerce with AI
+  </footer>
 </body>
 </html>
