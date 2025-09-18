@@ -52,19 +52,21 @@
       background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
       overflow: hidden;
     }
-    .hero-portrait {
+    .hero::after {
+      content: "";
       position: absolute;
-      top: 0;
-      right: -10%;
-      width: 60%;
-      height: 100%;
-      background-image: url('./images/peaky-potrait.jpg');
-      background-size: cover;
-      background-position: center left;
-      opacity: 0.15;
-      filter: grayscale(40%) contrast(1.2);
+      top: 0; right: 0; bottom: 0;
+      width: 40%;
+      background: url('images/peaky-potrait.jpg') no-repeat center right/cover;
+      opacity: 0.07;
       pointer-events: none;
+    }
+    canvas#particles {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       z-index: 0;
+      pointer-events: none;
     }
     .hero-content {
       position: relative;
@@ -80,11 +82,28 @@
       margin-bottom: 20px;
       font-weight: 700;
     }
-    .hero-subtitle {
-      font-size: 1.3rem;
-      color: #d0d0d0;
+    .animated-roles {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #e8e8e8;
+      height: 40px;
+      overflow: hidden;
       margin-bottom: 30px;
-      font-style: italic;
+    }
+    .animated-roles span {
+      display: block;
+      animation: slide 9s infinite;
+    }
+    @keyframes slide {
+      0% { transform: translateY(0%); }
+      20% { transform: translateY(0%); }
+      25% { transform: translateY(-100%); }
+      45% { transform: translateY(-100%); }
+      50% { transform: translateY(-200%); }
+      70% { transform: translateY(-200%); }
+      75% { transform: translateY(-300%); }
+      95% { transform: translateY(-300%); }
+      100% { transform: translateY(0%); }
     }
     .btn {
       display: inline-block;
@@ -97,32 +116,6 @@
       transition: all 0.3s;
     }
     .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(184,134,11,0.4); }
-
-    /* Role animation */
-    .hero-roles {
-      margin-top: 20px;
-      font-size: clamp(1.2rem, 3vw, 1.8rem);
-      font-family: 'Cinzel', serif;
-      color: #d4d4d4;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      min-height: 2em;
-      position: relative;
-    }
-    .hero-roles .role {
-      opacity: 0;
-      transform: translateY(20px);
-      display: none;
-    }
-    .hero-roles .role.active {
-      display: block;
-      animation: fadeSlide 1s ease forwards;
-    }
-    @keyframes fadeSlide {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
 
     /* Sections */
     section {
@@ -160,6 +153,13 @@
       cursor:pointer;
       position:relative;
       overflow:hidden;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .project-card.show {
+      opacity: 1;
+      transform: translateY(0);
+      transition: all 0.6s ease-out;
     }
     .project-card:hover {
       border-color:#b8860b;
@@ -199,17 +199,16 @@
 
   <!-- Hero -->
   <section class="hero">
-    <div class="hero-portrait"></div>
+    <canvas id="particles"></canvas>
     <div class="hero-content">
       <h1 class="hero-title">Yuri Verma</h1>
-      <p class="hero-subtitle">"I'm building things they said were too early."</p>
-      <div class="hero-roles">
-        <span class="role active">AI Engineer</span>
-        <span class="role">ML Systems Developer</span>
-        <span class="role">Full-Stack Innovator</span>
-        <span class="role">Visionary Builder</span>
+      <div class="animated-roles">
+        <span>AI Engineer</span>
+        <span>AI tools expert</span>
+        <span>Prompt Engineer</span>
+        <span>Conversational AI Builder</span>
       </div>
-      <a href="#projects" class="btn" style="margin-top:30px;">Explore My Work</a>
+      <a href="#projects" class="btn">Explore My Work</a>
     </div>
   </section>
 
@@ -269,15 +268,70 @@
   </footer>
 
   <script>
-    // Role shifting animation
-    const roles = document.querySelectorAll('.hero-roles .role');
-    let roleIndex = 0;
-    function showNextRole() {
-      roles[roleIndex].classList.remove('active');
-      roleIndex = (roleIndex + 1) % roles.length;
-      roles[roleIndex].classList.add('active');
+    // Particles animation
+    const canvas = document.getElementById("particles");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    let particlesArray = [];
+    const numParticles = 60;
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 3 + 1;
+        this.speedX = Math.random() * 1 - 0.5;
+        this.speedY = Math.random() * 1 - 0.5;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if(this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+        if(this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+      }
+      draw() {
+        ctx.fillStyle = "rgba(255,255,255,0.08)";
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
+        ctx.fill();
+      }
     }
-    setInterval(showNextRole, 3000);
+
+    function initParticles() {
+      particlesArray = [];
+      for(let i=0; i<numParticles; i++) {
+        particlesArray.push(new Particle());
+      }
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particlesArray.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animateParticles);
+    }
+
+    initParticles();
+    animateParticles();
+    window.addEventListener("resize", ()=>{
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      initParticles();
+    });
+
+    // Scroll animations for project cards
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting) {
+          entry.target.classList.add("show");
+        }
+      });
+    }, { threshold: 0.2 });
+
+    document.querySelectorAll(".project-card").forEach(card => observer.observe(card));
   </script>
 </body>
 </html>
